@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kisiler_uygulamasi/entity/kisiler.dart';
 import 'package:kisiler_uygulamasi/views/kisi_detay_sayfa.dart';
 import 'package:kisiler_uygulamasi/views/kisi_kayit_sayfa.dart';
+
+import '../cubit/anasayfa_cubit.dart';
 
 class Anasayfa extends StatefulWidget {
 
@@ -15,19 +18,11 @@ class _AnasayfaState extends State<Anasayfa> {
 
   bool aramaYapiliyorMu = false;
 
-  Future<List<Kisiler>> tumKisileriGoster() async {
+  @override
+  void initState() {
 
-    var kisilerListesi = <Kisiler>[];
-    
-    var k1 = Kisiler(kisi_id: 1, kisi_ad: "Ahmet", kisi_tel: "1111");
-    var k2 = Kisiler(kisi_id: 2, kisi_ad: "Zeynep", kisi_tel: "2222");
-    var k3 = Kisiler(kisi_id: 3, kisi_ad: "Beyza", kisi_tel: "3333");
-
-    kisilerListesi.add(k1);
-    kisilerListesi.add(k2);
-    kisilerListesi.add(k3);
-
-    return kisilerListesi;
+    super.initState();
+    context.read<AnasayfaCubit>().kisileriYukle();
   }
 
   @override
@@ -41,7 +36,7 @@ class _AnasayfaState extends State<Anasayfa> {
               hintText: "Ara",
             ),
             onChanged: (aramaSonucu) {
-              print("Arama Sonucu : $aramaSonucu");
+              context.read<AnasayfaCubit>().ara(aramaSonucu);
             },
           ) :
           const Text("Kişiler"),
@@ -51,6 +46,7 @@ class _AnasayfaState extends State<Anasayfa> {
             onPressed: () {
               setState(() {
                 aramaYapiliyorMu = false;
+                context.read<AnasayfaCubit>().kisileriYukle();
               });
             },
             icon: const Icon(Icons.cancel),
@@ -65,13 +61,11 @@ class _AnasayfaState extends State<Anasayfa> {
           ),
         ],
       ),
-      body: FutureBuilder<List<Kisiler>>(
-        future: tumKisileriGoster(),
-        builder: (context, snapshot) {
-          if(snapshot.hasData) {
-            var kisilerListesi = snapshot.data;
+      body: BlocBuilder<AnasayfaCubit, List<Kisiler>>(
+        builder: (context, kisilerListesi) {
+          if(kisilerListesi.isNotEmpty) {
             return ListView.builder(
-              itemCount: kisilerListesi!.length,
+              itemCount: kisilerListesi.length,
               itemBuilder: (context, indeks) {
                 var kisi = kisilerListesi[indeks];
                 return GestureDetector(
@@ -96,7 +90,7 @@ class _AnasayfaState extends State<Anasayfa> {
                                     action: SnackBarAction(
                                       label: "EVET",
                                       onPressed: () {
-                                        print("Kişi Sil : ${kisi.kisi_id}");
+                                        context.read<AnasayfaCubit>().sil(kisi.kisi_id);
                                       },
                                     ),
                                 ),
