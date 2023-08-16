@@ -72,7 +72,7 @@ class _AnasayfaState extends State<Anasayfa> {
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => KisiDetaySayfa(kisi: kisi)))
                       .then((value) {
-                        print("Anasayfaya dönüldü.");
+                        context.read<AnasayfaCubit>().kisileriYukle();
                       });
                   },
                   child: Card(
@@ -116,7 +116,7 @@ class _AnasayfaState extends State<Anasayfa> {
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const KisiKayitSayfa()))
               .then((value) {
-                print("Anasayfaya dönüldü.");
+                context.read<AnasayfaCubit>().kisileriYukle();
               });
         },
         child: const Icon(Icons.add),
