@@ -5,10 +5,10 @@ class KisiKayitCubit extends Cubit<void> {
 
   KisiKayitCubit() : super(0);
 
-  var krepo = KisilerDaoRepository();
+  var repo = KisilerDaoRepository();
 
   Future<void> kayit(String kisi_ad, String kisi_tel) async {
 
-    await krepo.kisiKayit(kisi_ad, kisi_tel);
+    await repo.kisiKayit(kisi_ad, kisi_tel);
   }
 }

@@ -6,7 +6,6 @@ import 'package:kisiler_uygulamasi/cubit/kisi_kayit_cubit.dart';
 import 'package:kisiler_uygulamasi/views/anasayfa.dart';
 
 void main() {
-
   runApp(const MyApp());
 }
 
@@ -23,13 +22,13 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => AnasayfaCubit()),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Kişiler',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
           useMaterial3: true,
         ),
-        home: Anasayfa(),
+        home: const Anasayfa(),
       ),
     );
   }

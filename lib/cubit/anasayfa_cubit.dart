@@ -6,25 +6,25 @@ class AnasayfaCubit extends Cubit<List<Kisiler>> {
 
   AnasayfaCubit() : super(<Kisiler>[]);
 
-  var krepo = KisilerDaoRepository();
+  var repo = KisilerDaoRepository();
 
   Future<void> kisileriYukle() async {
 
-    var liste = await krepo.tumKisileriAl();
+    var liste = await repo.tumKisileriAl();
 
     emit(liste);
   }
 
   Future<void> ara(String aramaKelimesi) async {
 
-    var liste = await krepo.kisiAra(aramaKelimesi);
+    var liste = await repo.kisiAra(aramaKelimesi);
 
     emit(liste);
   }
 
   Future<void> sil(int kisi_id) async {
 
-    await krepo.kisiSil(kisi_id);
+    await repo.kisiSil(kisi_id);
     await kisileriYukle();
   }
 }
