@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kisiler_uygulamasi/colors.dart';
 import 'package:kisiler_uygulamasi/cubit/kisi_kayit_cubit.dart';
 
 class KisiKayitSayfa extends StatefulWidget {
@@ -19,32 +20,53 @@ class _KisiKayitSayfaState extends State<KisiKayitSayfa> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue,
-        title: const Text("Kişi Kayıt"),
+        backgroundColor: colorPrimary,
+        foregroundColor: foregroundColor,
+        title: const Text("Yeni Kişi Ekle"),
+        centerTitle: true,
       ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(left: 50, right: 50),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextField(
                 controller: tfKisiAd,
+                keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
-                  hintText: "Kişi Ad",
+                  border: OutlineInputBorder(),
+                  labelText: "Kişi Adı",
+                  hintText: "Kişi adını giriniz...",
+                  prefixIcon: Icon(Icons.person_outline),
                 ),
               ),
+              const SizedBox(height: 40),
               TextField(
                 controller: tfKisiTel,
+                keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
-                  hintText: "Kişi Telefon",
+                  border: OutlineInputBorder(),
+                  labelText: "Kişi Telefon Numarası",
+                  hintText: "Kişi telefon numarasını giriniz...",
+                  prefixIcon: Icon(Icons.phone),
                 ),
               ),
-              ElevatedButton(
+              const SizedBox(height: 40),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colorAccent,
+                  foregroundColor: Colors.black,
+                ),
                 onPressed: () {
                   context.read<KisiKayitCubit>().kayit(tfKisiAd.text, tfKisiTel.text);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Yeni kişi kaydı başarıyla eklendi.")),
+                  );
                 },
-                child: const Text("KAYDET"),
+                icon: const Icon(Icons.person_add),
+                label: const Text("KİŞİ EKLE"),
               ),
             ],
           ),
