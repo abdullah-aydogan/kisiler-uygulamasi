@@ -95,11 +95,21 @@ class _KisiDetaySayfaState extends State<KisiDetaySayfa> {
                   foregroundColor: Colors.black,
                 ),
                 onPressed: () {
-                  context.read<KisiDetayCubit>().guncelle(widget.kisi.kisi_id, tfKisiAd.text, tfKisiTel.text);
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Kişi kaydı başarıyla güncellendi.")),
-                  );
+                  if(tfKisiAd.text.isNotEmpty && tfKisiTel.text.isNotEmpty) {
+
+                    context.read<KisiDetayCubit>().guncelle(widget.kisi.kisi_id, tfKisiAd.text, tfKisiTel.text);
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Kişi kaydı başarıyla güncellendi.")),
+                    );
+                  }
+
+                  else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Alanlar boş geçilemez!")),
+                    );
+                  }
                 },
                 label: const Text("KAYDI GÜNCELLE"),
                 icon: const Icon(Icons.update_outlined),

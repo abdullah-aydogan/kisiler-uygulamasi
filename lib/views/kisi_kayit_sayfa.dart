@@ -59,11 +59,21 @@ class _KisiKayitSayfaState extends State<KisiKayitSayfa> {
                   foregroundColor: Colors.black,
                 ),
                 onPressed: () {
-                  context.read<KisiKayitCubit>().kayit(tfKisiAd.text, tfKisiTel.text);
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Yeni kişi kaydı başarıyla eklendi.")),
-                  );
+                  if(tfKisiAd.text.isNotEmpty && tfKisiTel.text.isNotEmpty) {
+
+                    context.read<KisiKayitCubit>().kayit(tfKisiAd.text, tfKisiTel.text);
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Yeni kişi kaydı başarıyla eklendi.")),
+                    );
+                  }
+
+                  else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Alanlar boş geçilemez!")),
+                    );
+                  }
                 },
                 icon: const Icon(Icons.person_add),
                 label: const Text("KİŞİ EKLE"),
