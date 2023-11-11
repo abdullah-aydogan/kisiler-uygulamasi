@@ -1,6 +1,6 @@
-# kisiler_uygulamasi
+# Kişiler Uygulaması
 
-A new Flutter project.
+Flutter Bloc pattern ile yazılmış örnek uygulama
 
 ## Getting Started
 
