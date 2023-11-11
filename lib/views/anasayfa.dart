@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.dart';
 import 'package:kisiler_uygulamasi/colors.dart';
 import 'package:kisiler_uygulamasi/entity/kisiler.dart';
 import 'package:kisiler_uygulamasi/views/kisi_detay_sayfa.dart';
@@ -17,6 +18,7 @@ class Anasayfa extends StatefulWidget {
 class _AnasayfaState extends State<Anasayfa> {
 
   bool aramaYapiliyorMu = false;
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -68,6 +70,7 @@ class _AnasayfaState extends State<Anasayfa> {
         builder: (context, kisilerListesi) {
           if(kisilerListesi.isNotEmpty) {
             return ListView.builder(
+              controller: scrollController,
               itemCount: kisilerListesi.length,
               itemBuilder: (context, indeks) {
                 var kisi = kisilerListesi[indeks];
@@ -155,16 +158,20 @@ class _AnasayfaState extends State<Anasayfa> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: colorAccent,
-        foregroundColor: Colors.black,
-        onPressed: () {
+      floatingActionButton: ScrollingFabAnimated(
+        icon: const Icon(Icons.add, color: Colors.black),
+        text: const Text("Ekle", style: TextStyle(fontSize: 16, color: Colors.black)),
+        width: 100,
+        scrollController: scrollController,
+        color: colorAccent,
+        animateIcon: false,
+        radius: 26.0,
+        onPress: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const KisiKayitSayfa()))
               .then((value) {
                 context.read<AnasayfaCubit>().kisileriYukle();
               });
         },
-        child: const Icon(Icons.add),
       ),
     );
   }

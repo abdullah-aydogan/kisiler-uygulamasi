@@ -33,6 +33,7 @@ dependencies:
   flutter_bloc:
   path:
   sqflite:
+  flutter_scrolling_fab_animated:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
